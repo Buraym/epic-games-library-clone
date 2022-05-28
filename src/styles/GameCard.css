@@ -1,0 +1,35 @@
+.card{
+    display:flex;
+    width:133px + 2.9vw;
+    height:180px + 3.3vh;
+
+    flex-direction:column;
+}
+
+.imagem-jogo{
+    width: 12em;
+    height:15em;
+
+    border-radius:6px;
+}
+
+.caixa-nome-opcoes{
+    display:flex;
+    color:blanchedalmond;
+    
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.botao{
+    display:flex;
+    width:133px + 3vw;
+    border:none;
+    background:transparent;
+    color:blanchedalmond;
+
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
