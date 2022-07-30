@@ -21,6 +21,7 @@ import {
 export default function GameCard({
   imagem,
   nome,
+  viewMode,
   ultimasincronizacao,
   tamanho,
   tempodejogo,
@@ -34,11 +35,18 @@ export default function GameCard({
   return (
     <Card
       style={{
-        width: 180,
-        height: 340,
+        width: viewMode === "card" ? 180 : "100%",
+        height: viewMode === "card" ? 340 : 100,
         padding: 10,
-        backgroundColor: "#0b090a",
+        backgroundColor: viewMode === "card" ? "transparent" : "#252B35",
         border: "none",
+        flexDirection: viewMode === "card" ? "column" : "row",
+        transition: "ease-in-out 300",
+        "& root": {
+          "& :hover": {
+            backgroundColor: "#252B35",
+          },
+        },
       }}
       elevation={0}
     >
@@ -46,12 +54,17 @@ export default function GameCard({
         component="img"
         image={imagem}
         alt={nome}
-        height="250"
-        style={{ borderRadius: 10 }}
+        style={{
+          borderRadius: 10,
+          height: viewMode === "card" ? 250 : 100,
+          width: viewMode === "list" && 180,
+          maxWidth: 180,
+          objectFit: "cover",
+        }}
       />
       <CardContent
         style={{
-          flexDirection: "column",
+          flexDirection: viewMode === "card" ? "column" : "row",
           justifyContent: "flex-start",
           padding: 5,
           alignItems: "center",
@@ -98,68 +111,5 @@ export default function GameCard({
         </Grid>
       </CardContent>
     </Card>
-
-    // <div className="card">
-    //   <img className="imagem-jogo" src={props.imagem} />
-    //   <div className="caixa-nome-opcoes">
-    //     <label className="nome-jogo">{props.nome}</label>
-    //     <MoreHoriz onClick={() => setOpcoes(!opcoes)} />
-    //   </div>
-    //   <div className="caixa-botao">
-    //     {baixado ? (
-    //       <button className="botao" onClick={() => setBaixado(!baixado)}>
-    //         <ArrowDownward />
-    //         <label>Instalar</label>
-    //       </button>
-    //     ) : (
-    //       <button className="botao" onClick={() => setBaixado(!baixado)}>
-    //         <PlayArrow />
-    //         <label>Inicializar</label>
-    //       </button>
-    //     )}
-    //   </div>
-    //   {opcoes ? (
-    //     <div className="caixa-opcoes">
-    //       <div className="opcoes-superior">
-    //         <div>
-    //           <button>
-    //             <label>Ir para a página da Store</label>
-    //           </button>
-    //           <button>
-    //             <label>Verificar</label>
-    //           </button>
-    //           <button>
-    //             <label>Criar Um Atalho</label>
-    //           </button>
-    //           <button>
-    //             <label>Sincronizar Dados Agora</label>
-    //             <label>última sincronização {props.ultimasincronizacao}</label>
-    //           </button>
-    //           <button>
-    //             <label></label>
-    //           </button>
-    //           <button>
-    //             <label></label>
-    //           </button>
-    //           <button>
-    //             <label>Desinstalar</label>
-    //             <label>{props.tamanho}</label>
-    //           </button>
-    //         </div>
-    //       </div>
-    //       <div className="linha"></div>
-    //       <div className="opcoes-inferior">
-    //         <div>
-    //           <label>Você Jogou</label>
-    //           <label>{props.tempodejogo}</label>
-    //         </div>
-    //         <div>
-    //           <label>Versão</label>
-    //           <label>{props.versao}</label>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   ) : null}
-    // </div>
   );
 }

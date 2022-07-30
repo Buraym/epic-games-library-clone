@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Search } from "@mui/icons-material";
-
 export default function SearchInput({ type, placeholder }) {
   return (
     <div
@@ -14,8 +13,8 @@ export default function SearchInput({ type, placeholder }) {
         height: 40,
         borderRadius: type ? 5 : 30,
         color: "white",
-        backgroundColor: "#101119",
-        borderColor: "#101119",
+        backgroundColor: "#252B35",
+        borderColor: "#252B35 ",
         border: "none",
         paddingLeft: 5,
       }}
@@ -28,9 +27,9 @@ export default function SearchInput({ type, placeholder }) {
           height: 20,
           borderRadius: type ? 5 : 30,
           color: "white",
-          backgroundColor: "#101119",
+          backgroundColor: "#252B35",
           paddingLeft: 10,
-          borderColor: "#101119",
+          borderColor: "#252B35 ",
           border: "none",
           outline: "none",
           fontWeight: "bolder",

@@ -1,31 +1,26 @@
 import "../styles/Library.css";
-import BibliotecaIcone from "../assets/columns-gap.svg";
 import GameCard from "../components/GameCard";
 import ImagemJogo1 from "../assets/Sonic_Mania_(artwork).jpg";
 import ImagemJogo2 from "../assets/Sludge-Life.jpg";
 import ImagemJogo3 from "../assets/horizon-chase-turbo-feat12.jpg";
 import ImagemJogo4 from "../assets/pathway_cover.jpg";
 import ImagemJogo5 from "../assets/pine.jpg";
+import ImagemJogo6 from "../assets/minit.png";
 import {
   LocalOffer,
-  Dashboard,
-  GetApp,
-  Settings,
-  AccountCircle,
-  Search,
   People,
   KeyboardArrowLeft,
   Cached,
   FormatListBulleted,
-  Widgets,
   ExpandMore,
+  GridViewSharp,
 } from "@mui/icons-material/";
 import { SiEpicgames, SiUnrealengine } from "react-icons/si";
+import { Search } from "@mui/icons-material";
 import {
   Button,
   Grid,
   IconButton,
-  TextField,
   Typography,
   Divider,
   Avatar,
@@ -35,6 +30,7 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import SearchInput from "../components/SearchInput";
+import { useState } from "react";
 
 const library = [
   {
@@ -77,9 +73,20 @@ const library = [
     tempodejogo: "3hours 54mins",
     versao: "1.003045",
   },
+  {
+    imagem: ImagemJogo6,
+    nome: "Minit",
+    ultimasincronizacao: "18/04/2021 18:36:40",
+    tamanho: "1.8GB",
+    tempodejogo: "3hours 54mins",
+    versao: "1.003045",
+  },
 ];
 
 function Library() {
+  const [sorting, setSorting] = useState("Alfabética A-Z");
+  const [viewMode, setViewMode] = useState("card");
+
   return (
     <Grid
       container
@@ -92,7 +99,7 @@ function Library() {
         width: "100vw",
         minHeight: "100vh",
         height: "100%",
-        backgroundColor: "#0b090a",
+        backgroundColor: "#161a1d",
       }}
     >
       <Grid item xs={2}>
@@ -156,7 +163,7 @@ function Library() {
               borderRadius: 5,
             }}
           >
-            <Dashboard
+            <GridViewSharp
               style={{
                 width: 25,
                 height: 25,
@@ -309,6 +316,26 @@ function Library() {
                 >
                   Classificar por:
                 </Typography>
+                <select
+                  value={sorting}
+                  onChange={(ev) => setSorting(ev.target.value)}
+                  style={{
+                    padding: 5,
+                    fontSize: 17,
+                    backgroundColor: "transparent",
+                    color: "white",
+                    border: "none",
+                    outline: "none",
+                    appearance: "none",
+                    accentColor: "transparent",
+                  }}
+                >
+                  <option value={"Jogado recentemente"}>
+                    {"Jogado recentemente"}
+                  </option>
+                  <option value={"Alfabética A-Z"}>{"Alfabética A-Z"}</option>
+                  <option value={"Alfabética Z-A"}>{"Alfabética Z-A"}</option>
+                </select>
               </Grid>
 
               <Grid
@@ -323,10 +350,10 @@ function Library() {
                   marginTop: 15,
                 }}
               >
-                <IconButton>
-                  <Widgets style={{ color: "white" }} />
+                <IconButton onClick={() => setViewMode("card")}>
+                  <GridViewSharp style={{ color: "white" }} />
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={() => setViewMode("list")}>
                   <FormatListBulleted style={{ color: "white" }} />
                 </IconButton>
                 <IconButton>
@@ -353,16 +380,29 @@ function Library() {
               wrap="wrap"
               sx={{ width: "80%" }}
             >
-              {library.map((jogo) => (
-                <GameCard
-                  imagem={jogo.imagem}
-                  nome={jogo.nome}
-                  ultimasincronizacao={jogo.ultimasincronizacao}
-                  tamanho={jogo.tamanho}
-                  tempodejogo={jogo.tempodejogo}
-                  versao={jogo.versao}
-                />
-              ))}
+              {viewMode === "card"
+                ? library.map((jogo) => (
+                    <GameCard
+                      imagem={jogo.imagem}
+                      nome={jogo.nome}
+                      ultimasincronizacao={jogo.ultimasincronizacao}
+                      tamanho={jogo.tamanho}
+                      tempodejogo={jogo.tempodejogo}
+                      versao={jogo.versao}
+                      viewMode="card"
+                    />
+                  ))
+                : library.map((jogo) => (
+                    <GameCard
+                      imagem={jogo.imagem}
+                      nome={jogo.nome}
+                      ultimasincronizacao={jogo.ultimasincronizacao}
+                      tamanho={jogo.tamanho}
+                      tempodejogo={jogo.tempodejogo}
+                      versao={jogo.versao}
+                      viewMode="list"
+                    />
+                  ))}
             </Grid>
 
             <Grid
@@ -377,7 +417,47 @@ function Library() {
               <Typography variant="button" style={{ color: "white" }}>
                 Filtros
               </Typography>
-              <SearchInput type={true} placeholder="Títulos" />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignContent: "center",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 5,
+                  color: "white",
+                  backgroundColor: "#252B35",
+                  borderColor: "#252B35 ",
+                  border: "none",
+                  paddingLeft: 15,
+                }}
+              >
+                <Search
+                  style={{
+                    color: "white",
+                    width: 20,
+                    height: 40,
+                    marginRight: 5,
+                  }}
+                />
+                <input
+                  style={{
+                    height: 20,
+                    borderRadius: 5,
+                    color: "white",
+                    backgroundColor: "#252B35",
+                    paddingLeft: 10,
+                    borderColor: "#252B35 ",
+                    border: "none",
+                    outline: "none",
+                    fontWeight: "bolder",
+                    width: "100%",
+                  }}
+                  placeholder="Títulos"
+                />
+              </div>
               <Divider
                 style={{
                   backgroundColor: "white",
@@ -387,9 +467,17 @@ function Library() {
                 orientation="horizontal"
                 flexItem
               />
-              <Accordion sx={{ backgroundColor: "rgb(255, 255, 255, 0)" }}>
+              <Accordion
+                elevation={0}
+                sx={{
+                  backgroundColor: "transparent",
+                  width: "100%",
+                  border: "none",
+                }}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMore style={{ color: "white" }} />}
+                  style={{ width: "100%" }}
                 >
                   <Typography variant="button" style={{ color: "white" }}>
                     Generos
@@ -770,11 +858,19 @@ function Library() {
                 orientation="horizontal"
                 flexItem
               />
-              <Accordion sx={{ backgroundColor: "rgb(255, 255, 255, 0)" }}>
+              <Accordion
+                elevation={0}
+                sx={{ backgroundColor: "rgb(255, 255, 255, 0)", width: "100%" }}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMore style={{ color: "white" }} />}
+                  style={{ width: "100%" }}
                 >
-                  <Typography variant="button" style={{ color: "white" }}>
+                  <Typography
+                    variant="button"
+                    style={{ color: "white" }}
+                    noWrap
+                  >
                     Recursos
                   </Typography>
                 </AccordionSummary>
@@ -910,11 +1006,19 @@ function Library() {
                 orientation="horizontal"
                 flexItem
               />
-              <Accordion sx={{ backgroundColor: "rgb(255, 255, 255, 0)" }}>
+              <Accordion
+                elevation={0}
+                sx={{ backgroundColor: "rgb(255, 255, 255, 0)", width: "100%" }}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMore style={{ color: "white" }} />}
+                  style={{ width: "100%" }}
                 >
-                  <Typography variant="button" style={{ color: "white" }}>
+                  <Typography
+                    variant="button"
+                    style={{ color: "white" }}
+                    noWrap
+                  >
                     Tipo
                   </Typography>
                 </AccordionSummary>
@@ -950,11 +1054,19 @@ function Library() {
                 orientation="horizontal"
                 flexItem
               />
-              <Accordion sx={{ backgroundColor: "rgb(255, 255, 255, 0)" }}>
+              <Accordion
+                elevation={0}
+                sx={{ backgroundColor: "rgb(255, 255, 255, 0)", width: "100%" }}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMore style={{ color: "white" }} />}
+                  style={{ width: "100%" }}
                 >
-                  <Typography variant="button" style={{ color: "white" }}>
+                  <Typography
+                    variant="button"
+                    style={{ color: "white" }}
+                    noWrap
+                  >
                     Plataforma
                   </Typography>
                 </AccordionSummary>
